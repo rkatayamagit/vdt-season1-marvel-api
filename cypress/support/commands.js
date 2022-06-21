@@ -24,33 +24,33 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('setToken', function(){
+Cypress.Commands.add('setToken', function () {
     cy.api({
-        method:'POST',
-        url:'/sessions',
+        method: 'POST',
+        url: '/sessions',
         body: {
-            email:'rodrigokatayama@qacademy.io',
-            password:'qa-cademy'
+            email: 'rodrigokatayama@qacademy.io',
+            password: 'qa-cademy'
         },
         failOnStatusCode: false
-    }).then(function(response){
+    }).then(function (response) {
         expect(response.status).to.eql(200)
         Cypress.env('token', response.body.token)
     })
 })
 
-Cypress.Commands.add('back2ThePast', function(){
+Cypress.Commands.add('back2ThePast', function () {
     cy.api({
         method: 'DELETE',
-        url:'/back2thepast/6297ef7c6791aa00161c97ab',
+        url: '/back2thepast/6297ef7c6791aa00161c97ab',
         failOnStatusCode: false
-    }).then(function(response){
+    }).then(function (response) {
         expect(response.status).to.eql(200)
     })
 })
 
-//POST /characters
-Cypress.Commands.add('postCharacter', function(payload){
+//POST requisição que testa o cadastro de personsagens
+Cypress.Commands.add('postCharacter', function (payload) {
     cy.api({
         method: 'POST',
         url: '/characters',
@@ -59,8 +59,55 @@ Cypress.Commands.add('postCharacter', function(payload){
             Authorization: Cypress.env('token')
         },
         failOnStatusCode: false
-    }).then(function(response){
+    }).then(function (response) {
         return response;
     })
 
+})
+
+//GET requisição que testa a obtenção de personsagens
+Cypress.Commands.add('getCharacters', function () {
+    cy.api({
+        method: 'GET',
+        url: '/characters',
+        headers: {
+            Authorization: Cypress.env('token')
+        },
+        failOnStatusCode: false
+    }).then(function (response) {
+        return response;
+    })
+})
+
+Cypress.Commands.add('getCharacterById', function (characterId) {
+    cy.api({
+        method: 'GET',
+        url: '/characters/' + characterId,
+        headers: {
+            Authorization: Cypress.env('token')
+        },
+        failOnStatusCode: false
+    }).then(function (response) {
+        return response;
+    })
+})
+
+Cypress.Commands.add('searchCharacters', function (characterName) {
+    cy.api({
+        method: 'GET',
+        url: '/characters',
+        qs: {name:characterName},
+        headers: {
+            Authorization: Cypress.env('token')
+        },
+        failOnStatusCode: false
+    }).then(function (response) {
+        return response;
+    })
+})
+
+Cypress.Commands.add('populateCharacters', function (characters) {
+    characters.forEach(function (c) {
+        cy.postCharacter(c)
+    });
 })

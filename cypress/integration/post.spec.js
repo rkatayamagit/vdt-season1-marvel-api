@@ -8,7 +8,6 @@ describe('POST /characters', function () {
 
 
     it('deve cadastrar um personagem', function () {
-
         const character = {
             name: 'Wanda Maximof',
             alias: 'Feiticeira Escarlate',
@@ -72,7 +71,7 @@ describe('POST /characters', function () {
 
             })
         })
-        
+
         it('Erro ao tentar cadastrar sem alias', function () {
             const character = {
                 name: 'Pietro Maximoff',
@@ -158,7 +157,7 @@ describe('POST /characters', function () {
 
             })
         })
-        
+
         it('Erro ao tentar cadastrar com o campo alias em branco', function () {
             const character = {
                 name: 'Pietro Maximoff',
