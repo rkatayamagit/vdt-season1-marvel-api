@@ -20,3 +20,7 @@ import '@bahmutov/cy-api'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
+//Gerador do token
+before(function () {
+    cy.setToken()
+})
